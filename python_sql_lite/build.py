@@ -4,21 +4,21 @@ from db import create_table, create_connection
 from schema import *
 
 
-def select_all_from_menu(conn):
+def select_all_from_author(conn):
     """
     Query all rows in the tasks table
     :param conn: the Connection object
     :return:
     """
     cur = conn.cursor()
-    cur.execute("SELECT * FROM menu")
+    cur.execute("SELECT * FROM author")
 
     rows = cur.fetchall()
 
     for row in rows:
         print(row)
 
-def insert_to_menu(conn):
+def insert_to_author(conn):
     """
     Create a new project into the projects table
     :param conn:
@@ -26,17 +26,32 @@ def insert_to_menu(conn):
     :return: project id
     """
     sql = """
-        INSERT INTO menu VALUES
-        (1, 'Green Tea', '1', 50),
-        (2, 'Thai Tea', '1', 50),
-        (3, 'Jasmine Tea', '1', 50),
-        (4, 'Espresso', '2',55),
-        (5, 'Cappucino', '2',55),
-        (6, 'Latte', '2',55),
-        (7, 'Mocha', '2',55),
-        (8, 'Passion Fruit', '3',60),
-        (9, 'Mango Juice', '3',60),
-        (10,'Orange Juice', '3',60);
+         insert into author (id, first_name, last_name, email, gender) values
+         (1, 'Dietrich', 'Ferras', 'dferras0@mayoclinic.com', 'Male'),
+         (2, 'Locke', 'Maleby', 'lmaleby1@globo.com', 'Male'),
+         (3, 'Masha', 'Ridsdale', 'mridsdale2@seattletimes.com', 'Female'),
+         (4, 'Maddy', 'McLay', 'mmclay3@godaddy.com', 'Non-binary'),
+         (5, 'Aland', 'Goodwill', 'agoodwill4@domainmarket.com', 'Male'),
+         (6, 'Livvyy', 'Syson', 'lsyson5@themeforest.net', 'Female'),
+         (7, 'Annette', 'Boarder', 'aboarder6@europa.eu', 'Female'),
+         (8, 'Rubina', 'Radleigh', 'rradleigh7@a8.net', 'Polygender'),
+         (9, 'Uri', 'Molesworth', 'umolesworth8@blog.com', 'Male'),
+         (10, 'Noland', 'O'' Clovan', 'noclovan9@tamu.edu', 'Male'),
+         (11, 'Redford', 'Firidolfi', 'rfiridolfia@issuu.com', 'Male'),
+         (12, 'Caryn', 'Crackel', 'ccrackelb@independent.co.uk', 'Genderqueer'),
+         (13, 'Peggy', 'Pendleton', 'ppendletonc@ameblo.jp', 'Female'),
+         (14, 'Thomas', 'Duddy', 'tduddyd@blogs.com', 'Male'),
+         (15, 'Andris', 'Gilbanks', 'agilbankse@census.gov', 'Male'),
+         (16, 'Alvis', 'Winslade', 'awinsladef@vk.com', 'Male'),
+         (17, 'Julita', 'Hayden', 'jhaydeng@cnn.com', 'Female'),
+         (18, 'Granger', 'Focke', 'gfockeh@telegraph.co.uk', 'Male'),
+         (19, 'Dorise', 'Venney', 'dvenneyi@java.com', 'Female'),
+         (20, 'Alys', 'Fullilove', 'afullilovej@1und1.de', 'Genderfluid'),
+         (21, 'Ginnie', 'Carmen', 'gcarmenk@trellian.com', 'Female'),
+         (22, 'Will', 'Pithie', 'wpithiel@facebook.com', 'Male'),
+         (23, 'Rustie', 'Liven', 'rlivenm@tinypic.com', 'Male'),
+         (24, 'Pegeen', 'Hanssmann', 'phanssmannn@uol.com.br', 'Female'),
+         (25, 'Farrah', 'Waplington', 'fwaplingtono@wordpress.org', 'Female');
     """
 
     cur = conn.cursor()
@@ -44,95 +59,493 @@ def insert_to_menu(conn):
     conn.commit()
     return cur.lastrowid
 
-def insert_to_categories(conn):
+def insert_to_book(conn):
+    sql = """
+        insert into book (id, book_title, author, genre, total_copies, available_copies, date_acquired, price) values
+        (83, 'Evelyn', 'Allina Stoeckle', 'Drama', 22, 20, '10/28/2014', 18.96),
+        (21, 'Harry Potter and the Chamber of Secrets', 'Verna Stidston', 'Adventure|Fantasy', 16, 2, '10/2/2002', 46.0),
+        (26, 'Prince of Central Park, The', 'Rina Strafford', 'Action|Adventure|Drama', 28, 10, '12/30/2006', 99.68),
+        (31, 'Life with Father', 'Lucille Punton', 'Comedy', 34, 15, '9/18/2022', 42.83),
+        (47, 'Regeneration', 'Bride Jemmett', 'Crime|Drama|Romance', 33, 14, '8/11/2023', 39.38),
+        (16, 'What to Do in Case of Fire (Was tun, wenn''s brennt?),', 'Anatole Ind', 'Comedy|Drama', 24, 25, '9/9/2021', 7.02),
+        (19, 'The Little Kidnappers', 'Tobe Southam', 'Drama|Romance|War', 15, 23, '10/23/2002', 33.66),
+        (9, 'Mr. Lucky', 'Woodie Seath', 'Comedy|Romance', 19, 20, '1/16/2002', 65.82),
+        (10, 'Manitou, The', 'Hodge Blackey', 'Horror', 34, 24, '1/27/2019', 145.1),
+        (98, 'Rent-A-Cop', 'Patton Cockland', 'Action|Comedy|Crime', 4, 23, '6/6/2017', 9.85),
+        (19, 'American Yakuza', 'Leroy Ferrie', 'Action|Drama|Thriller', 25, 14, '6/2/2003', 72.48),
+        (75, 'Malice N Wonderland', 'Brandea Lockhurst', 'Drama|Musical', 33, 13, '6/6/2016', 37.69),
+        (48, 'Good Year, A', 'Lynnea Palia', 'Comedy|Drama|Romance', 36, 24, '11/15/2007', null),
+        (4, 'The Suspended Step of the Stork', 'Stearn Jakubovsky', 'Drama|Romance', 45, 7, '12/12/2010', 145.36),
+        (19, 'Nobody''s Children (I figli di nessuno),', 'Candie Iianon', 'Drama|Romance', 29, 12, '3/9/2020', 24.72),
+        (75, 'Injury to One, An', 'Jeremy Hawson', 'Documentary', 6, 8, '11/16/2017', null),
+        (50, 'Shoppen ', 'Laure Gullen', 'Comedy|Romance', 27, 11, '4/3/2011', 18.94),
+        (77, 'Young Americans, The', 'Clareta Llewellyn', 'Crime|Drama', 24, 18, '10/25/2010', 140.77),
+        (54, 'Act of Aggression', 'Jacquie Cronkshaw', 'Crime|Drama', 50, 1, '8/25/2016', 93.06),
+        (95, 'Alien Raiders', 'Kiley Liddyard', 'Mystery|Sci-Fi|Thriller', 23, 2, '12/30/2010', 70.72),
+        (72, 'Halloween: The Curse of Michael Myers (Halloween 6: The Curse of Michael Myers),', 'Isahella Janek', 'Horror|Thriller', 19, 18, '7/14/2013', 43.21),
+        (91, 'Ink', 'Camel Dawltrey', 'Action|Fantasy|Sci-Fi', 40, 7, '2/29/2012', 23.95),
+        (82, 'From Above', 'Gwenni Wickett', 'Drama|Romance', 41, 14, '8/17/2022', 32.21),
+        (87, '7th Floor', 'Lari Jennens', 'Mystery|Thriller', 46, 16, '2/16/2004', null),
+        (95, 'Forgiving Dr. Mengele', 'Thedrick Templman', 'Documentary', 35, 23, '10/28/2020', null),
+        (26, 'Raincoat', 'Lynne Melladew', 'Drama|Romance', 42, 15, '11/12/2000', 95.81),
+        (3, 'The Returned', 'Derby Pinnock', 'Drama|Horror|Thriller', 30, 23, '7/7/2018', 8.83),
+        (99, 'Superman/Batman: Apocalypse', 'Jaquenetta Gostridge', 'Animation', 50, 20, '10/26/2003', 108.37),
+        (14, 'Tomorrow at Dawn (Demain dès l''aube),', 'Launce Botte', 'Drama', 24, 17, '6/18/2015', 130.43),
+        (64, 'Hard Times', 'Gae Korneluk', 'Action|Drama', 37, 25, '1/1/2019', 63.78),
+        (20, 'Dragon Ball Z: Dead Zone (Doragon bôru Z 1: Ora no Gohan wo kaese),', 'Aland Giraudou', 'Action|Adventure|Animation|Fantasy|Sci-Fi', 16, 11, '6/3/2017', null),
+        (98, 'Dollman', 'Joshua MacDiarmid', 'Action|Comedy|Crime', 46, 18, '6/4/2002', 75.18),
+        (58, 'Final Destination, The (Final Destination 4), (Final Destination in 3-D, The),', 'Pauly Ayshford', 'Horror|Thriller', 40, 16, '8/5/2023', 43.77),
+        (11, 'Negotiator, The', 'Roanna Gavriel', 'Action|Crime|Drama|Mystery|Thriller', 40, 24, '8/25/2013', 20.81),
+        (27, 'Christmas Carol, A (Scrooge),', 'Hansiain Krinks', 'Drama|Fantasy', 33, 11, '5/28/2002', 60.28),
+        (83, 'Lady, The', 'Ki Akitt', 'Drama', 48, 21, '8/19/2021', 120.54),
+        (64, 'Princess Aurora (Orora gongju),', 'Debby Nuth', 'Crime|Drama|Mystery', 44, 25, '2/20/2017', 100.46),
+        (60, 'Into the West', 'Benni Wiffield', 'Adventure|Drama|Western', 39, 21, '9/4/2019', 109.81),
+        (42, 'Carnage', 'Lucius Mottini', 'Comedy|Drama', 37, 5, '7/13/2023', 30.27),
+        (60, 'Pure Country', 'Tarrah Bozier', 'Drama|Musical|Romance', 15, 8, '4/6/2017', 7.19),
+        (23, 'Battlefield Earth', 'Flin Shakespeare', 'Action|Sci-Fi', 25, 11, '4/1/2023', 50.51),
+        (82, 'Zatoichi', 'Ozzie Novik', 'Action|Drama', 4, 3, '2/17/2008', 144.18),
+        (73, 'Whistling in the Dark', 'Mary Leed', 'Comedy|Mystery', 26, 10, '4/2/2013', 100.12),
+        (86, 'Love''s Kitchen', 'Natalina Josephy', 'Comedy|Drama|Romance', 41, 13, '7/12/2007', 96.68),
+        (22, 'Chicks with Sticks', 'Rhodia Alenikov', 'Comedy|Drama', 3, 2, '9/6/2020', 59.2),
+        (93, 'Son of Dracula', 'Ellette Sawl', 'Horror', 41, 17, '3/7/2014', 27.61),
+        (14, 'Down Twisted', 'Abdul Hardiker', 'Action|Adventure|Crime|Drama|Thriller', 47, 12, '6/7/2006', null),
+        (39, 'Distance', 'Ulric Mingardi', 'Drama', 36, 22, '9/26/2020', 62.02),
+        (27, 'Girl in the Red Velvet Swing, The', 'Marcellus Dronsfield', 'Crime|Drama|Romance', 34, 22, '12/12/2018', 38.63),
+        (63, 'Getaway, The', 'Carrie Talks', 'Action|Crime|Drama|Thriller', 5, 5, '2/12/2004', 44.65),
+        (70, 'The Valley of Gwangi', 'Sergent Ulyatt', 'Sci-Fi|Thriller|Western', 7, 6, '11/20/2007', 105.57),
+        (28, 'Dahmer', 'Aurelea Vinton', 'Drama|Horror|Thriller', 5, 17, '10/6/2009', 50.55),
+        (15, 'Background to Danger', 'Bellanca Sheerin', 'Drama|Thriller|War', 17, 21, '5/9/2007', 34.05),
+        (30, 'Teen Wolf Too', 'Alexine Tierney', 'Comedy', 24, 15, '6/21/2009', 103.0),
+        (65, 'Valiant', 'Gerik Bromley', 'Adventure|Animation|Children|Comedy|Fantasy|War', 14, 7, '6/23/2004', 125.76),
+        (30, 'Easy Rider', 'Spike Hearnaman', 'Adventure|Drama', 49, 21, '6/12/2016', 1.35),
+        (27, 'House of Wax', 'Karlik Diwell', 'Crime|Horror|Mystery|Thriller', 48, 23, '10/29/2018', 107.47),
+        (61, 'Godzilla''s Revenge (Gojira-Minira-Gabara: Oru Kaijû Daishingeki), (All Monsters Attack),', 'Clement Lusgdin', 'Children', 7, 0, '11/5/2014', 30.14),
+        (13, 'Steel', 'Ax Fentem', 'Action', 21, 17, '9/20/2002', 24.52),
+        (34, '13', 'Flore Flescher', 'Thriller', 31, 21, '1/26/2017', 103.81),
+        (63, 'Life is a Miracle (Zivot je cudo),', 'Adolph Weatherall', 'Comedy|Drama|Musical|Romance|War', 27, 4, '10/5/2004', 14.36),
+        (99, 'Adam and Eve (Adão e Eva),', 'Thalia Giorio', 'Drama', 33, 16, '11/17/2018', 100.5),
+        (70, 'Cape No. 7 (Hái-kak chhit-ho),', 'Adah Bernardet', 'Comedy|Drama|Romance', 17, 18, '12/12/2001', 147.3),
+        (29, 'Ghosts of the Abyss', 'Arie Bountiff', 'Documentary|IMAX', 46, 0, '8/5/2021', 74.14),
+        (19, 'Cloudburst', 'Lotti Rumens', 'Adventure|Comedy|Drama', 39, 9, '12/3/2021', 97.73),
+        (19, 'Gabriel Over the White House', 'Arni Hultberg', 'Drama|Fantasy|Romance', 8, 21, '7/8/2022', 142.54),
+        (41, 'Last Passenger', 'Alayne Frampton', 'Action|Mystery|Thriller', 43, 22, '8/16/2012', 27.13),
+        (28, 'Tentacles (Tentacoli),', 'Lonnie Krzyzaniak', 'Horror|Sci-Fi|Thriller', 36, 23, '10/26/2001', 26.46),
+        (48, 'Rare Birds', 'Kane Winchcomb', 'Comedy|Drama', 24, 18, '2/24/2017', 6.73),
+        (92, 'Feds', 'Pedro Freire', 'Comedy', 22, 0, '2/17/2008', 112.68),
+        (49, 'Thirst', 'Hilda Dowsett', 'Drama', 10, 6, '7/25/2022', 23.91),
+        (66, 'Planet of the Vampires (Terrore nello spazio),', 'Lyn Abella', 'Horror|Sci-Fi', 42, 23, '10/11/2018', 39.87),
+        (57, 'Blue State', 'Rustie McLaverty', 'Comedy', 12, 4, '1/1/2017', null),
+        (55, 'Reaping, The', 'Elden Marciskewski', 'Horror|Thriller', 12, 4, '1/2/2011', 34.73),
+        (78, 'Unspeakable Act, The', 'Franchot D''Abbot-Doyle', 'Drama', 36, 18, '6/8/2016', 103.72),
+        (23, 'Osaka Elegy (Naniwa erejî),', 'Evangelia Danton', 'Drama', 2, 8, '4/12/2021', 109.96),
+        (51, 'Godzilla vs. SpaceGodzilla (Gojira VS Supesugojira),', 'Janey Johanssen', 'Action|Sci-Fi', 26, 23, '7/5/2013', 121.84),
+        (70, 'Guitar, The', 'Berenice Willingam', 'Drama|Romance', 11, 8, '11/5/2009', 140.31),
+        (24, 'The Lazarus Effect', 'Adrian Trevance', 'Horror|Thriller', 7, 18, '11/24/2018', 88.86),
+        (96, 'Attack of the 50 Foot Woman', 'Imogen Lake', 'Comedy|Sci-Fi', 34, 7, '2/5/2001', 121.74),
+        (92, 'Loose Change 9/11: An American Coup', 'Chico McGrory', 'Documentary', 25, 4, '11/13/2002', 85.67),
+        (13, 'She Monkeys', 'Rubetta Cleveland', 'Drama', 39, 17, '10/17/2021', null),
+        (49, 'Things We Lost in the Fire', 'Merralee Duplock', 'Drama|Romance', 13, 16, '7/14/2001', 113.4),
+        (62, 'Frenzy', 'Dianna Petrello', 'Thriller', 15, 18, '11/29/2000', 143.86),
+        (100, 'Lost in America', 'Jorge Fridd', 'Comedy', 22, 1, '3/30/2016', 39.36),
+        (29, 'Manufactured Landscapes', 'Jobye Pollins', 'Documentary', 28, 13, '5/3/2006', 109.68),
+        (14, 'Cat Soup (Nekojiru-so),', 'Xaviera Bisterfeld', 'Adventure|Animation|Drama|Horror', 34, 0, '11/6/2008', 109.37),
+        (87, 'Invasion of the Body Snatchers', 'Brig Mantrup', 'Horror|Mystery|Sci-Fi|Thriller', 10, 16, '1/29/2011', 75.11),
+        (58, 'I''ve Loved You So Long (Il y a longtemps que je t''aime),', 'Marilyn Jandel', 'Drama|Mystery', 9, 1, '8/6/2007', null),
+        (95, 'Angel', 'Langsdon Cluse', 'Action|Crime|Thriller', 17, 24, '4/15/2005', 42.86),
+        (14, 'Khroustaliov, My Car! (Khrustalyov, mashinu!),', 'Silvio Egalton', 'Comedy|Drama', 23, 7, '9/8/2009', 89.77),
+        (18, 'Parent Trap, The', 'Jed Lamberton', 'Children|Comedy|Romance', 33, 19, '9/11/2007', 142.52),
+        (4, 'Terminator 3: Rise of the Machines', 'Emmerich Bowskill', 'Action|Adventure|Sci-Fi', 6, 1, '5/5/2001', 46.83),
+        (8, 'Line of Sight', 'Hinda Letchford', 'Documentary', 32, 13, '1/22/2022', 38.84),
+        (33, 'Not for or Against (Quite the Contrary), (Ni pour, ni contre (bien au contraire),),', 'Skylar Stapels', 'Crime|Drama', 11, 12, '7/27/2001', null),
+        (99, 'Boy on a Dolphin', 'Doy Dinesen', 'Adventure|Romance', 7, 17, '7/14/2019', 81.44),
+        (90, 'Third Miracle, The', 'Rickard Darycott', 'Drama', 40, 13, '7/15/2006', 53.62),
+        (99, 'Adrenaline Drive (Adorenarin doraibu),', 'Wilmer Chasteney', 'Comedy', 14, 3, '3/31/2014', 139.84),
+        (11, 'Kidnap Syndicate', 'Rozelle McGrill', 'Crime', 33, 20, '1/19/2010', 4.43),
+        (99, 'Point, The', 'Reuven Jillis', 'Animation|Children|Fantasy|Musical', 40, 8, '1/21/2003', 31.49);
+    """
+    cur = conn.cursor()
+    cur.execute(sql)
+    conn.commit()
+    return cur.lastrowid
+
+def insert_to_checkout(conn):
 
     sql = """
-        INSERT INTO categories VALUES
-	    (1, 'tea'),
-        (2, 'coffee'),
-        (3, 'juice');
+         insert into checkout (id, book_id, patron_id, checkout_date, return_date) values
+         (1, 16, 41, '5/29/2023', '2/19/2023'),
+         (2, 37, 24, '5/16/2023', '11/8/2022'),
+         (3, 19, 36, '3/23/2023', '2/11/2023'),
+         (4, 46, 47, '2/2/2023', '10/6/2022'),
+         (5, 21, 47, '3/3/2023', '4/29/2023'),
+         (6, 7, 29, '11/10/2022', '4/19/2023'),
+         (7, 20, 24, '5/26/2023', '10/24/2023'),
+         (8, 3, 34, '12/10/2022', '5/23/2023'),
+         (9, 48, 0, '10/5/2022', '9/20/2023'),
+         (10, 24, 17, '6/24/2023', '9/5/2023'),
+         (11, 27, 25, '2/15/2023', '10/22/2022'),
+         (12, 47, 8, '6/6/2023', '9/15/2023'),
+         (13, 30, 3, '11/10/2022', '8/27/2023'),
+         (14, 23, 18, '3/30/2023', '8/14/2023'),
+         (15, 32, 21, '3/28/2023', '12/1/2022'),
+         (16, 42, 36, '7/16/2023', '10/4/2023'),
+         (17, 49, 35, '7/27/2023', '6/10/2023'),
+         (18, 26, 1, '9/10/2022', '12/21/2022'),
+         (19, 22, 10, '8/6/2023', '11/28/2022'),
+         (20, 22, 28, '7/12/2023', '5/24/2023'),
+         (21, 7, 22, '7/12/2023', '12/28/2022'),
+         (22, 46, 41, '7/31/2023', '10/21/2023'),
+         (23, 28, 48, '8/22/2023', '2/21/2023'),
+         (24, 12, 7, '8/31/2023', '3/27/2023'),
+         (25, 4, 12, '7/29/2023', '9/8/2023');
     """
     cur = conn.cursor()
     cur.execute(sql)
     conn.commit()
     return cur.lastrowid
 
-def insert_to_customers(conn):
+def insert_to_hold(conn):
+    sql = """
+         insert into hold (id, book_id, patron_id, hold_date) values
+         (1, 60, 52, '2023-08-04 16:18:00'),
+         (2, 10, 81, '2023-08-25 03:06:47'),
+         (3, 87, 26, '2023-08-24 16:50:14'),
+         (4, 65, 89, '2023-08-14 12:01:53'),
+         (5, 32, 79, '2023-09-05 10:09:41'),
+         (6, 15, 25, '2023-08-17 02:25:43'),
+         (7, 35, 41, '2023-09-08 18:53:24'),
+         (8, 62, 24, '2023-09-19 15:14:21'),
+         (9, 88, 17, '2023-09-27 10:13:16'),
+         (10, 100, 25, '2023-08-24 18:55:51'),
+         (11, 13, 34, '2023-09-02 15:50:23'),
+         (12, 85, 22, '2023-08-25 04:07:40'),
+         (13, 6, 38, '2023-09-13 15:06:15'),
+         (14, 86, 15, '2023-08-27 18:50:01'),
+         (15, 36, 91, '2023-08-31 04:12:34'),
+         (16, 44, 51, '2023-08-30 22:51:55'),
+         (17, 24, 76, '2023-09-21 23:33:46'),
+         (18, 45, 53, '2023-09-22 00:37:00'),
+         (19, 12, 82, '2023-09-17 04:28:59'),
+         (20, 50, 51, '2023-08-31 21:46:29'),
+         (21, 45, 99, '2023-09-12 03:32:06'),
+         (22, 91, 4, '2023-08-21 22:23:19'),
+         (23, 69, 8, '2023-09-05 15:14:50'),
+         (24, 12, 12, '2023-08-08 13:55:09'),
+         (25, 44, 14, '2023-08-09 19:32:37'),
+         (26, 78, 8, '2023-09-19 19:46:42'),
+         (27, 45, 48, '2023-09-01 13:52:39'),
+         (28, 16, 51, '2023-08-17 15:47:36'),
+         (29, 2, 6, '2023-08-31 19:29:23'),
+         (30, 1, 67, '2023-09-03 03:36:41'),
+         (31, 13, 88, '2023-10-01 18:00:30'),
+         (32, 84, 63, '2023-09-11 05:31:05'),
+         (33, 54, 31, '2023-08-17 01:17:51'),
+         (34, 49, 25, '2023-09-13 02:49:15'),
+         (35, 29, 74, '2023-08-13 17:04:26'),
+         (36, 32, 87, '2023-09-01 16:23:23'),
+         (37, 55, 34, '2023-08-10 11:33:26'),
+         (38, 31, 83, '2023-08-29 00:18:37'),
+         (39, 97, 78, '2023-09-24 21:57:26'),
+         (40, 21, 7, '2023-09-19 06:33:09'),
+         (41, 5, 46, '2023-09-27 04:22:30'),
+         (42, 54, 34, '2023-08-22 21:55:11'),
+         (43, 56, 63, '2023-09-28 11:56:29'),
+         (44, 10, 62, '2023-08-07 11:44:06'),
+         (45, 32, 16, '2023-09-13 20:55:23'),
+         (46, 30, 53, '2023-08-21 07:08:25'),
+         (47, 85, 42, '2023-09-12 04:19:12'),
+         (48, 25, 12, '2023-09-12 14:58:36'),
+         (49, 37, 56, '2023-08-16 19:54:50'),
+         (50, 60, 40, '2023-09-19 20:43:29'),
+         (51, 54, 49, '2023-08-29 00:02:03'),
+         (52, 28, 1, '2023-08-02 15:26:34'),
+         (53, 19, 86, '2023-09-25 21:28:47'),
+         (54, 93, 4, '2023-09-22 22:19:05'),
+         (55, 11, 40, '2023-09-26 01:25:01'),
+         (56, 82, 41, '2023-09-07 06:59:30'),
+         (57, 93, 27, '2023-09-11 20:56:38'),
+         (58, 66, 4, '2023-09-20 18:43:52'),
+         (59, 32, 42, '2023-08-11 12:20:23'),
+         (60, 88, 20, '2023-09-03 16:21:46'),
+         (61, 65, 95, '2023-10-01 11:40:01'),
+         (62, 42, 67, '2023-08-07 01:08:58'),
+         (63, 30, 100, '2023-08-28 03:08:27'),
+         (64, 74, 56, '2023-08-05 18:22:42'),
+         (65, 2, 66, '2023-08-12 06:50:09'),
+         (66, 88, 45, '2023-08-08 12:39:18'),
+         (67, 35, 19, '2023-09-30 21:09:24'),
+         (68, 78, 63, '2023-09-27 07:12:33'),
+         (69, 43, 80, '2023-09-08 16:13:58'),
+         (70, 62, 41, '2023-09-19 18:41:55'),
+         (71, 81, 68, '2023-08-06 03:17:08'),
+         (72, 33, 94, '2023-09-06 00:37:45'),
+         (73, 19, 52, '2023-09-27 11:12:41'),
+         (74, 38, 78, '2023-09-10 12:47:15'),
+         (75, 24, 55, '2023-08-08 00:11:35'),
+         (76, 32, 77, '2023-09-02 10:47:43'),
+         (77, 65, 53, '2023-08-23 15:19:08'),
+         (78, 4, 98, '2023-09-03 06:52:01'),
+         (79, 81, 87, '2023-08-08 00:44:24'),
+         (80, 86, 7, '2023-09-07 02:11:09'),
+         (81, 18, 77, '2023-08-26 03:38:47'),
+         (82, 48, 13, '2023-09-19 21:06:21'),
+         (83, 82, 73, '2023-08-30 11:43:09'),
+         (84, 53, 58, '2023-09-09 23:08:57'),
+         (85, 52, 24, '2023-08-18 01:56:04'),
+         (86, 89, 18, '2023-09-10 01:56:12'),
+         (87, 83, 17, '2023-08-06 03:13:18'),
+         (88, 55, 26, '2023-08-07 01:31:24'),
+         (89, 1, 19, '2023-09-02 06:39:02'),
+         (90, 26, 35, '2023-08-03 22:14:33'),
+         (91, 36, 97, '2023-09-11 12:10:10'),
+         (92, 63, 83, '2023-08-25 15:35:08'),
+         (93, 33, 12, '2023-09-04 18:20:09'),
+         (94, 40, 6, '2023-08-16 18:30:21'),
+         (95, 84, 21, '2023-08-24 00:03:48'),
+         (96, 77, 20, '2023-08-31 11:59:27'),
+         (97, 30, 59, '2023-09-23 07:16:43'),
+         (98, 50, 1, '2023-09-27 21:38:23'),
+         (99, 33, 1, '2023-08-17 03:41:54'),
+         (100, 4, 21, '2023-09-28 02:57:34'),
+         (101, 53, 49, '2023-09-15 22:03:37'),
+         (102, 19, 47, '2023-09-21 04:33:43'),
+         (103, 3, 40, '2023-09-08 02:37:48'),
+         (104, 86, 20, '2023-09-30 16:59:43'),
+         (105, 76, 37, '2023-08-10 07:17:12'),
+         (106, 93, 85, '2023-09-13 05:17:04'),
+         (107, 27, 82, '2023-09-04 09:38:57'),
+         (108, 32, 9, '2023-09-02 09:51:58'),
+         (109, 82, 42, '2023-09-16 14:13:48'),
+         (110, 37, 42, '2023-09-30 08:33:51'),
+         (111, 35, 48, '2023-08-07 03:04:18'),
+         (112, 13, 89, '2023-09-02 20:40:03'),
+         (113, 85, 31, '2023-08-13 22:17:22'),
+         (114, 28, 2, '2023-08-10 14:10:38'),
+         (115, 18, 80, '2023-09-03 01:17:15'),
+         (116, 61, 90, '2023-08-23 11:03:18'),
+         (117, 75, 4, '2023-09-11 05:23:21'),
+         (118, 52, 35, '2023-08-13 13:08:25'),
+         (119, 55, 62, '2023-08-15 22:33:42'),
+         (120, 58, 32, '2023-09-29 16:05:57'),
+         (121, 84, 97, '2023-09-21 22:20:28'),
+         (122, 68, 57, '2023-08-04 02:03:46'),
+         (123, 16, 71, '2023-09-11 01:33:00'),
+         (124, 64, 94, '2023-09-16 15:47:32'),
+         (125, 84, 46, '2023-09-26 02:08:19'),
+         (126, 37, 41, '2023-08-16 20:44:27'),
+         (127, 46, 21, '2023-08-08 14:57:57'),
+         (128, 51, 16, '2023-09-24 07:54:49'),
+         (129, 57, 40, '2023-09-13 17:39:23'),
+         (130, 6, 25, '2023-09-13 20:31:49'),
+         (131, 25, 56, '2023-08-29 13:30:19'),
+         (132, 61, 62, '2023-08-21 18:18:33'),
+         (133, 92, 56, '2023-08-07 18:24:43'),
+         (134, 69, 80, '2023-10-01 11:03:35'),
+         (135, 4, 47, '2023-08-09 23:54:32'),
+         (136, 22, 20, '2023-08-24 22:02:34'),
+         (137, 64, 82, '2023-08-08 21:40:50'),
+         (138, 28, 73, '2023-08-04 14:16:43'),
+         (139, 26, 86, '2023-08-04 05:54:07'),
+         (140, 13, 46, '2023-09-27 20:30:54'),
+         (141, 36, 75, '2023-08-16 14:30:29'),
+         (142, 6, 3, '2023-09-19 14:23:06'),
+         (143, 17, 39, '2023-08-20 02:05:25'),
+         (144, 40, 24, '2023-08-31 11:39:03'),
+         (145, 72, 36, '2023-08-15 14:30:45'),
+         (146, 17, 37, '2023-08-19 18:08:41'),
+         (147, 45, 45, '2023-10-02 20:54:59'),
+         (148, 9, 10, '2023-08-04 19:16:31'),
+         (149, 85, 57, '2023-08-19 22:13:32'),
+         (150, 18, 27, '2023-08-09 07:52:40'),
+         (151, 49, 82, '2023-09-28 18:04:02'),
+         (152, 90, 77, '2023-08-14 05:37:22'),
+         (153, 29, 47, '2023-09-15 01:18:37'),
+         (154, 36, 79, '2023-08-19 14:49:05'),
+         (155, 87, 36, '2023-08-13 04:11:19'),
+         (156, 72, 14, '2023-10-01 13:00:36'),
+         (157, 99, 69, '2023-08-20 09:08:42'),
+         (158, 75, 10, '2023-08-06 08:36:01'),
+         (159, 95, 81, '2023-09-24 16:50:20'),
+         (160, 62, 7, '2023-09-27 14:44:14'),
+         (161, 71, 8, '2023-08-08 13:46:45'),
+         (162, 93, 87, '2023-08-27 04:32:29'),
+         (163, 59, 97, '2023-09-07 23:28:17'),
+         (164, 16, 69, '2023-08-02 11:09:13'),
+         (165, 83, 12, '2023-08-26 01:05:51'),
+         (166, 14, 30, '2023-09-03 23:49:56'),
+         (167, 51, 38, '2023-09-16 04:32:28'),
+         (168, 63, 59, '2023-08-17 08:24:33'),
+         (169, 18, 11, '2023-09-28 03:55:09'),
+         (170, 81, 74, '2023-08-06 12:55:13'),
+         (171, 31, 34, '2023-09-13 03:32:52'),
+         (172, 24, 57, '2023-09-27 06:13:55'),
+         (173, 14, 91, '2023-08-05 11:24:18'),
+         (174, 44, 75, '2023-09-18 14:55:01'),
+         (175, 41, 41, '2023-08-08 19:26:19'),
+         (176, 1, 63, '2023-08-17 09:05:25'),
+         (177, 45, 25, '2023-08-21 14:04:36'),
+         (178, 30, 37, '2023-09-02 20:45:53'),
+         (179, 8, 44, '2023-08-09 14:55:26'),
+         (180, 8, 69, '2023-09-11 21:33:37'),
+         (181, 43, 85, '2023-08-25 05:34:31'),
+         (182, 78, 80, '2023-08-01 08:26:18'),
+         (183, 74, 41, '2023-08-27 04:04:40'),
+         (184, 8, 45, '2023-09-17 15:33:35'),
+         (185, 14, 10, '2023-09-05 17:57:41'),
+         (186, 54, 22, '2023-08-10 01:45:19'),
+         (187, 22, 37, '2023-09-20 15:01:45'),
+         (188, 100, 5, '2023-08-15 19:17:32'),
+         (189, 39, 93, '2023-09-07 07:20:07'),
+         (190, 67, 11, '2023-09-11 11:02:16'),
+         (191, 47, 24, '2023-09-23 03:30:12'),
+         (192, 90, 86, '2023-08-14 05:34:32'),
+         (193, 73, 38, '2023-09-02 15:02:15'),
+         (194, 65, 73, '2023-08-05 03:13:19'),
+         (195, 90, 29, '2023-08-02 04:26:45'),
+         (196, 1, 96, '2023-09-06 07:25:56'),
+         (197, 20, 6, '2023-10-02 09:03:30'),
+         (198, 81, 37, '2023-09-20 02:46:46'),
+         (199, 29, 88, '2023-09-26 22:52:09'),
+         (200, 25, 57, '2023-10-01 14:06:59'),
+         (201, 18, 65, '2023-09-04 04:58:41'),
+         (202, 52, 3, '2023-08-05 05:17:18'),
+         (203, 98, 60, '2023-08-20 11:18:10');
+    """
+    cur = conn.cursor()
+    cur.execute(sql)
+    conn.commit()
+    return cur.lastrowid
+
+def insert_to_patrons(conn):
 
     sql = """
-        INSERT INTO customers VALUES
-	    (1, 'Mark', 'Lee','Bangkok'),
-        (2, 'Johnny', 'Suh', 'Phuket'),
-        (3, 'Jennie', 'Kim', 'Chiangmai'),
-        (4, 'Jeno', 'Lee', 'Bangkok'),
-        (5, 'Karina', 'Yoo', 'Chiangmai');
+        insert into patron (id, first_name, last_name, email, gender, address) values
+        (1, 'Mischa', 'Trice', 'mtrice0@sun.com', 'Male', '42 Stone Corner Circle'),
+        (2, 'Britt', 'Norquoy', 'bnorquoy1@earthlink.net', 'Female', '2 Westerfield Road'),
+        (3, 'Junette', 'Kusick', 'jkusick2@geocities.com', 'Female', '71 Ohio Parkway'),
+        (4, 'Doralynne', 'Ginglell', 'dginglell3@fema.gov', 'Female', '3087 Killdeer Drive'),
+        (5, 'Maddy', 'Parmenter', 'mparmenter4@creativecommons.org', 'Female', '7 Jay Center'),
+        (6, 'Blakeley', 'Bibey', 'bbibey5@mlb.com', 'Female', '12157 Westerfield Avenue'),
+        (7, 'Graeme', 'Haldenby', 'ghaldenby6@auda.org.au', 'Genderfluid', '36 Fuller Drive'),
+        (8, 'Humberto', 'Pescud', 'hpescud7@creativecommons.org', 'Male', '8 Doe Crossing Avenue'),
+        (9, 'Cassi', 'Pirdue', 'cpirdue8@123-reg.co.uk', 'Female', '2 Vera Street'),
+        (10, 'Aleece', 'Mainston', 'amainston9@geocities.com', 'Non-binary', '25095 Manufacturers Lane'),
+        (11, 'Maison', 'Risson', 'mrissona@cdbaby.com', 'Male', '960 Elka Place'),
+        (12, 'Esme', 'Lamberti', 'elambertib@hubpages.com', 'Male', '32 Blackbird Avenue'),
+        (13, 'Celisse', 'Veart', 'cveartc@prlog.org', 'Female', '2 Dexter Way'),
+        (14, 'Monti', 'Shalcros', 'mshalcrosd@cargocollective.com', 'Polygender', '55429 Maywood Hill'),
+        (15, 'Hally', 'Le Franc', 'hlefrance@berkeley.edu', 'Female', '07542 John Wall Court'),
+        (16, 'Wye', 'Newall', 'wnewallf@chicagotribune.com', 'Male', '575 Hanson Drive'),
+        (17, 'Oswell', 'Negri', 'onegrig@usa.gov', 'Male', '505 Starling Place'),
+        (18, 'Murial', 'Connock', 'mconnockh@irs.gov', 'Female', '462 Sunnyside Plaza'),
+        (19, 'Chas', 'Osboldstone', 'cosboldstonei@bigcartel.com', 'Male', '2 Buell Lane'),
+        (20, 'Carce', 'De la Yglesia', 'cdelayglesiaj@cnet.com', 'Male', '80301 Ryan Alley'),
+        (21, 'Harwilll', 'Neles', 'hnelesk@washington.edu', 'Bigender', '21 Maple Wood Circle'),
+        (22, 'Hercule', 'Dainty', 'hdaintyl@homestead.com', 'Male', '84626 Fairfield Point'),
+        (23, 'Ida', 'Yellowlees', 'iyellowleesm@cocolog-nifty.com', 'Female', '7 Shelley Avenue'),
+        (24, 'Gavan', 'Argyle', 'gargylen@trellian.com', 'Polygender', '1 Hayes Plaza'),
+        (25, 'Renie', 'Adamolli', 'radamollio@umn.edu', 'Genderfluid', '9 Oriole Circle'),
+        (26, 'Othelia', 'Rolley', 'orolleyp@google.com.au', 'Female', '24 Schmedeman Road'),
+        (27, 'Moss', 'Krishtopaittis', 'mkrishtopaittisq@google.cn', 'Male', '0 Springview Pass'),
+        (28, 'Keelia', 'Scollan', 'kscollanr@cafepress.com', 'Female', '8321 Harbort Pass'),
+        (29, 'Elenore', 'Bysshe', 'ebysshes@vk.com', 'Female', '688 Tomscot Lane'),
+        (30, 'Anett', 'Cranney', 'acranneyt@cpanel.net', 'Female', '47 Packers Way'),
+        (31, 'Tatiania', 'Potts', 'tpottsu@nsw.gov.au', 'Female', '91 Commercial Lane'),
+        (32, 'Stefano', 'Tockell', 'stockellv@google.ru', 'Genderqueer', '986 Hoffman Point'),
+        (33, 'Andrea', 'Sprey', 'aspreyw@wufoo.com', 'Male', '4159 Melody Trail'),
+        (34, 'Lisabeth', 'Fletcher', 'lfletcherx@drupal.org', 'Female', '55098 Vahlen Crossing'),
+        (35, 'Saw', 'Ivamy', 'sivamyy@europa.eu', 'Male', '6 Upham Parkway'),
+        (36, 'Roobbie', 'Philbin', 'rphilbinz@omniture.com', 'Female', '683 Everett Street'),
+        (37, 'Gram', 'Brendish', 'gbrendish10@nydailynews.com', 'Genderfluid', '92 Mayfield Pass'),
+        (38, 'Zia', 'Croall', 'zcroall11@networkadvertising.org', 'Female', '4 Hallows Parkway'),
+        (39, 'Jermain', 'McGooch', 'jmcgooch12@nhs.uk', 'Male', '315 Helena Circle'),
+        (40, 'Charlotte', 'New', 'cnew13@wikipedia.org', 'Female', '337 Pine View Avenue'),
+        (41, 'Friederike', 'Goutcher', 'fgoutcher14@prweb.com', 'Female', '0188 Larry Pass'),
+        (42, 'Norma', 'Coey', 'ncoey15@flickr.com', 'Female', '2418 Johnson Street'),
+        (43, 'Dorothea', 'Hessentaler', 'dhessentaler16@blogs.com', 'Female', '57274 Mariners Cove Parkway'),
+        (44, 'Perry', 'Kleinhandler', 'pkleinhandler17@census.gov', 'Female', '87 Anzinger Drive'),
+        (45, 'Daron', 'Mammatt', 'dmammatt18@icq.com', 'Female', '120 South Alley'),
+        (46, 'Joseph', 'Yakobovicz', 'jyakobovicz19@about.com', 'Male', '52993 Swallow Terrace'),
+        (47, 'Robby', 'Benditt', 'rbenditt1a@delicious.com', 'Female', '03 Prentice Pass'),
+        (48, 'Gary', 'Gatfield', 'ggatfield1b@google.it', 'Male', '23 Gerald Point'),
+        (49, 'Margy', 'Haack', 'mhaack1c@bluehost.com', 'Female', '0 Annamark Trail'),
+        (50, 'Maurene', 'Lofting', 'mlofting1d@oaic.gov.au', 'Female', '4240 Loftsgordon Alley'),
+        (51, 'Wolfie', 'Mathieu', 'wmathieu1e@is.gd', 'Male', '78 Glendale Street'),
+        (52, 'Valentine', 'Kik', 'vkik1f@etsy.com', 'Male', '357 Milwaukee Road'),
+        (53, 'Stanton', 'Maris', 'smaris1g@imdb.com', 'Male', '2 Hollow Ridge Way'),
+        (54, 'Saul', 'Licquorish', 'slicquorish1h@cbslocal.com', 'Male', '93704 Shoshone Pass'),
+        (55, 'Wit', 'Bottomore', 'wbottomore1i@buzzfeed.com', 'Male', '6252 West Place'),
+        (56, 'Talya', 'Hammell', 'thammell1j@typepad.com', 'Female', '8229 American Parkway'),
+        (57, 'Josselyn', 'Skarin', 'jskarin1k@fotki.com', 'Non-binary', '7 Dorton Crossing'),
+        (58, 'Will', 'Hugnet', 'whugnet1l@si.edu', 'Genderfluid', '69338 Macpherson Parkway'),
+        (59, 'Patric', 'Caldecourt', 'pcaldecourt1m@baidu.com', 'Male', '1 Stang Junction'),
+        (60, 'Celestine', 'Seekings', 'cseekings1n@weather.com', 'Female', '41726 Lotheville Alley'),
+        (61, 'Lenette', 'Lilie', 'llilie1o@wsj.com', 'Female', '8164 Swallow Terrace'),
+        (62, 'Marilyn', 'Chetter', 'mchetter1p@pcworld.com', 'Female', '389 Mandrake Plaza'),
+        (63, 'Hanson', 'Ostler', 'hostler1q@comsenz.com', 'Male', '5 East Point'),
+        (64, 'Dinah', 'Lowndes', 'dlowndes1r@purevolume.com', 'Female', '14 Mcguire Hill'),
+        (65, 'Osborne', 'Wolver', 'owolver1s@issuu.com', 'Male', '21 Lillian Place'),
+        (66, 'Lancelot', 'Scatchar', 'lscatchar1t@eventbrite.com', 'Male', '1709 Jenifer Crossing'),
+        (67, 'Gabrielle', 'Winspare', 'gwinspare1u@seattletimes.com', 'Female', '7582 Eastwood Parkway'),
+        (68, 'Jefferey', 'Shailer', 'jshailer1v@howstuffworks.com', 'Male', '29282 Autumn Leaf Avenue'),
+        (69, 'Onfre', 'Doram', 'odoram1w@youtube.com', 'Male', '3 Calypso Drive'),
+        (70, 'Kirbie', 'Hendrikse', 'khendrikse1x@google.ru', 'Female', '1 Huxley Street'),
+        (71, 'Fulton', 'Caldecot', 'fcaldecot1y@devhub.com', 'Male', '1 Upham Court'),
+        (72, 'Star', 'Truman', 'struman1z@abc.net.au', 'Genderqueer', '1977 Talmadge Circle'),
+        (73, 'Henderson', 'Killbey', 'hkillbey20@europa.eu', 'Male', '4523 Dexter Court'),
+        (74, 'Worthy', 'Goves', 'wgoves21@mozilla.com', 'Male', '9 Basil Alley'),
+        (75, 'Ellyn', 'Snailham', 'esnailham22@spiegel.de', 'Female', '99845 Algoma Parkway'),
+        (76, 'Nettle', 'Elcom', 'nelcom23@google.cn', 'Female', '278 Rutledge Parkway'),
+        (77, 'Isobel', 'Eydel', 'ieydel24@home.pl', 'Female', '8 High Crossing Park'),
+        (78, 'Johan', 'Pettitt', 'jpettitt25@mtv.com', 'Male', '2046 Bellgrove Avenue'),
+        (79, 'Netty', 'Foli', 'nfoli26@rambler.ru', 'Female', '80430 6th Parkway'),
+        (80, 'Sebastien', 'Viccars', 'sviccars27@bravesites.com', 'Male', '9995 Evergreen Circle'),
+        (81, 'Ronalda', 'Simacek', 'rsimacek28@bluehost.com', 'Female', '10981 Lakewood Gardens Court'),
+        (82, 'Cale', 'Somerfield', 'csomerfield29@ifeng.com', 'Male', '185 Sherman Park'),
+        (83, 'Putnem', 'Verick', 'pverick2a@ask.com', 'Male', '4043 Eastwood Terrace'),
+        (84, 'Kris', 'Wilcher', 'kwilcher2b@ask.com', 'Genderqueer', '76 Crescent Oaks Street'),
+        (85, 'Bella', 'Tune', 'btune2c@hhs.gov', 'Female', '20980 Briar Crest Drive'),
+        (86, 'Chancey', 'Gard', 'cgard2d@fc2.com', 'Male', '7 Toban Way'),
+        (87, 'Raymund', 'Dimanche', 'rdimanche2e@webnode.com', 'Male', '24 Ridgeway Plaza'),
+        (88, 'Willy', 'Treven', 'wtreven2f@columbia.edu', 'Female', '63 Old Gate Junction'),
+        (89, 'Kristo', 'Featherstonhalgh', 'kfeatherstonhalgh2g@reverbnation.com', 'Male', '45230 Drewry Trail'),
+        (90, 'Frederico', 'O''Flannery', 'foflannery2h@marriott.com', 'Male', '00550 Maywood Lane'),
+        (91, 'Coraline', 'Goldie', 'cgoldie2i@miibeian.gov.cn', 'Female', '02643 Clove Alley'),
+        (92, 'Vinni', 'Booton', 'vbooton2j@nyu.edu', 'Female', '2 Springs Road'),
+        (93, 'Vite', 'McVeigh', 'vmcveigh2k@discuz.net', 'Male', '37 Waywood Junction'),
+        (94, 'Rafaello', 'Prandini', 'rprandini2l@hibu.com', 'Male', '16 Manufacturers Road'),
+        (95, 'Evvie', 'Wigley', 'ewigley2m@businessinsider.com', 'Female', '6112 Kinsman Crossing'),
+        (96, 'Braden', 'Vickars', 'bvickars2n@yellowpages.com', 'Male', '971 Milwaukee Alley'),
+        (97, 'Silvana', 'Aronsohn', 'saronsohn2o@cdbaby.com', 'Female', '22 Rowland Lane'),
+        (98, 'Marcelline', 'Folbigg', 'mfolbigg2p@issuu.com', 'Genderqueer', '07383 Oneill Terrace'),
+        (99, 'Hillie', 'Pole', 'hpole2q@ehow.com', 'Male', '432 Amoth Court'),
+        (100, 'Alon', 'Hayller', 'ahayller2r@list-manage.com', 'Male', '52 6th Parkway');
     """
     cur = conn.cursor()
     cur.execute(sql)
     conn.commit()
     return cur.lastrowid
 
-def insert_to_employees(conn):
-    sql = """
-         INSERT INTO employee VALUES
-	        (1, 'Nicolene', 'Jones','2020-09-01','Bangkok'),
-            (2, 'Anna', 'Smith', '2021-12-01', 'Phuket'),
-            (3, 'Jessica', 'Brown', '2020-08-01', 'Chiangmai');
-    """
-    cur = conn.cursor()
-    cur.execute(sql)
-    conn.commit()
-    return cur.lastrowid
-
-def insert_to_orders(conn):
-
-    sql = """
-        INSERT INTO Orders VALUES
-	    (1, '2022-08-01',1,1,4,'Grabfood',1),
-        (2, '2022-08-01',6,2,1,'Lineman',1),
-	    (3, '2022-08-02',2,2,2,'Robinhood',2),
-	    (4, '2022-08-03',3,1,5,'Grabfood',3),
-	    (5, '2022-08-04',1,1,2,'Robinhood',2),
-	    (6, '2022-08-05',6,1,4,'Grabfood',1),
-	    (7, '2022-08-05',10,1,3,'Grabfood',3),
-	    (8, '2022-08-09',3,2,4,'Grabfood',1),
-	    (9, '2022-08-13',5,3,1,'Lineman',1),
-	    (10, '2022-08-13',6,1,2,'Robinhood',2),
-	    (11, '2022-08-13',7,1,5,'Lineman',3),
-	    (12, '2022-08-14',4,1,5,'Grabfood',3),
-	    (13, '2022-08-15',5,2,3,'Grabfood',3),
-	    (14, '2022-08-15',10,1,2,'Robinhood',2),
-	    (15, '2022-08-18',5,2,1,'Lineman',1),
-	    (16, '2022-08-20',6,1,2,'Robinhood',2),
-	    (17, '2022-08-21',4,2,1,'Lineman',1),
-	    (18, '2022-08-25',5,1,5,'Grabfood',3),
-	    (19, '2022-08-26',5,3,3,'Grabfood',3),
-	    (20, '2022-08-29',6,2,4,'Grabfood',1);
-    """
-    cur = conn.cursor()
-    cur.execute(sql)
-    conn.commit()
-    return cur.lastrowid
 
 def main():
     database = "./pythonsqlite.db"
 
     # create a database connection
     conn = create_connection(database)
-    create_table(conn, sql_create_category_table)
-    insert_to_categories(conn)
-    create_table(conn, sql_create_menu_table)
-    insert_to_menu(conn)
-    create_table(conn, sql_create_customers_table)
-    insert_to_customers(conn)
-    create_table(conn, sql_create_employee_table)
-    insert_to_employees(conn)
-    create_table(conn, sql_create_orders_table)
-    insert_to_orders(conn)
+    create_table(conn, sql_create_author_table)
+    insert_to_author(conn)
+    create_table(conn, sql_create_book_table)
+    insert_to_book(conn)
+    create_table(conn, sql_create_checkout_table)
+    insert_to_checkout(conn)
+    create_table(conn, sql_create_hold_table)
+    insert_to_hold(conn)
+    create_table(conn, sql_create_patron_table)
+    insert_to_patrons(conn)
 
     print("Database build successful!")
 
+
 if __name__ == "__main__":
-    main()
+    main(),
 
 

@@ -1,22 +1,28 @@
-sql_create_category_table = """
-    CREATE TABLE categories (
-    category_id INT PRIMARY KEY,
-    category_name TEXT
+sql_create_author_table = """
+    create table author (
+        id INT,
+        first_name VARCHAR(50),
+        last_name VARCHAR(50),
+        email VARCHAR(50),
+        gender VARCHAR(50)
     );
 """
 
-sql_create_menu_table = """
-    CREATE TABLE menu (
-        menu_id INT PRIMARY KEY ,
-        menu_name TEXT,
-        category_id INT,
-        unit_price REAL,
-        FOREIGN KEY (category_id) references categories(category_id)
+sql_create_book_table = """
+    create table book (
+        id INT,
+        book_title VARCHAR(50),
+        author VARCHAR(50),
+        genre VARCHAR(50),
+        total_copies INT,
+        available_copies INT,
+        date_acquired DATE,
+        price DECIMAL(5,2)
     );
 """
 
-sql_create_customers_table = """
-    CREATE TABLE customers (
+sql_create_customer_table = """
+    CREATE TABLE customer (
     customer_id INT PRIMARY KEY ,
     firstname TEXT,
     Lastname TEXT,
@@ -24,30 +30,37 @@ sql_create_customers_table = """
 );
 """
 
-sql_create_employee_table = """
-    CREATE TABLE employee (
-        emp_id INT PRIMARY KEY ,
-        firstname TEXT,
-        Lastname TEXT,
-        hiredate TEXT,
-        branch TEXT );
-"""
-
-sql_create_orders_table = """
-    CREATE TABLE Orders(
-        orderid INT,
-        orderdate TEXT,
-        menu_id INT,
-        quantity INT DEFAULT 0,
-        customer_id INT,
-        delivery_platform TEXT,
-        emp_id INT,
-        FOREIGN KEY (menu_id) references menu(menu_id)
-        FOREIGN KEY (customer_id) references customers(customer_id)
-        FOREIGN KEY (emp_id) references employee(emp_id)
+sql_create_checkout_table = """
+    create table checkout (
+        id INT,
+        book_id INT,
+        patron_id INT,
+        checkout_date DATE,
+        return_date DATE
     );
 """
 
+sql_create_hold_table = """
+    create table hold (
+        id INT,
+        book_id INT,
+        patron_id INT,
+        hold_date DATE
+    );
+"""
+
+sql_create_patron_table = """
+    create table patron (
+        id INT,
+        first_name VARCHAR(50),
+        last_name VARCHAR(50),
+        email VARCHAR(50),
+        gender VARCHAR(50),
+        address VARCHAR(50)
+    );
+"""
+
+
 def get_schema():
-    schema = f"{sql_create_category_table}{sql_create_menu_table}{sql_create_customers_table}{sql_create_employee_table}{sql_create_orders_table}"
+    schema = f"{sql_create_author_table}{sql_create_book_table}{sql_create_checkout_table}{sql_create_hold_table}{sql_create_patron_table}"
     return schema
