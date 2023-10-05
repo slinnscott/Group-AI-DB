@@ -13,8 +13,8 @@ DATABASE = "./pythonsqlite.db"
 
 
 def main(conn, question):
-    with open("auth.json", "r") as f:
-        auth = json.load(f)
+    # with open("auth.json", "r") as f:
+    #     auth = json.load(f)
     # Load your API key from an environment variable or secret management service
     openai.api_key = os.environ.get('api_key')
     print(f"Question: {question}")
@@ -22,7 +22,7 @@ def main(conn, question):
     prompt = f"""
     
     Given the following SQL Schema:{get_schema()}
-    Write a SQL query to answer this question: {question}
+    Write a SQLite query to answer this question: {question}
     
     """
 

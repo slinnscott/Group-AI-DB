@@ -73,7 +73,7 @@ def insert_to_book(conn):
         (23, 'From Above', 8, 'Drama|Romance', 41, 14, '8/17/2022', 32.21),
         (24, '7th Floor', 9, 'Mystery|Thriller', 46, 16, '2/16/2004', null),
         (25, 'Forgiving Dr. Mengele', 9, 'Documentary', 35, 23, '10/28/2020', null),
-        (26, 'Raincoat', 'Lynne Melladew', 'Drama|Romance', 42, 15, '11/12/2000', 95.81),
+        (26, 'Raincoat', 9, 'Drama|Romance', 42, 15, '11/12/2000', 95.81),
         (27, 'The Returned', 10, 'Drama|Horror|Thriller', 30, 23, '7/7/2018', 8.83),
         (28, 'Superman/Batman: Apocalypse', 10, 'Animation', 50, 20, '10/26/2003', 108.37),
         (29, 'Tomorrow at Dawn (Demain dès l''aube),', 10, 'Drama', 24, 17, '6/18/2015', 130.43),
