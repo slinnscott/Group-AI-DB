@@ -18,6 +18,7 @@ def select_all_from_author(conn):
     for row in rows:
         print(row)
 
+
 def insert_to_author(conn):
     """
     Create a new project into the projects table
@@ -139,6 +140,7 @@ def insert_to_hold(conn):
     conn.commit()
     return cur.lastrowid
 
+
 def insert_to_patrons(conn):
 
     sql = """
@@ -172,7 +174,7 @@ def insert_to_patrons(conn):
         (27, 'Moss', 'Krishtopaittis', 'mkrishtopaittisq@google.cn', 'Male', '0 Springview Pass'),
         (28, 'Keelia', 'Scollan', 'kscollanr@cafepress.com', 'Female', '8321 Harbort Pass'),
         (29, 'Elenore', 'Bysshe', 'ebysshes@vk.com', 'Female', '688 Tomscot Lane'),
-        (30, 'Anett', 'Cranney', 'acranneyt@cpanel.net', 'Female', '47 Packers Way'),
+        (30, 'Anett', 'Cranney', 'acranneyt@cpanel.net', 'Female', '47 Packers Way');
     """
     cur = conn.cursor()
     cur.execute(sql)

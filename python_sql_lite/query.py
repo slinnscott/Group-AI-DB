@@ -16,6 +16,7 @@ def select_all_from_menu(conn):
     for row in rows:
         print(row)
 
+
 def select_from_table(conn, query):
     """
     Query all rows in the tasks table
