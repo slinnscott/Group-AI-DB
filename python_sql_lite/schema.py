@@ -42,7 +42,7 @@ sql_create_hold_table = """
 
 sql_create_patron_table = """
     create table patron (
-        id UNIQUE INT PRIMARY KEY,
+        id INT PRIMARY KEY,
         first_name VARCHAR(50),
         last_name VARCHAR(50),
         email VARCHAR(50),
@@ -53,5 +53,5 @@ sql_create_patron_table = """
 
 
 def get_schema():
-    schema = f"{sql_create_author_table}{sql_create_book_table}{sql_create_checkout_table}{sql_create_hold_table}{sql_create_patron_table}"
+    schema = f"{sql_create_patron_table}{sql_create_author_table}{sql_create_book_table}{sql_create_checkout_table}{sql_create_hold_table}"
     return schema

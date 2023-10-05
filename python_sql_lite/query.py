@@ -31,6 +31,7 @@ def select_from_table(conn, query):
     for row in rows:
         print(row)
 
+
 if __name__ == "__main__":
     database = "./pythonsqlite.db"
     conn = create_connection(database)

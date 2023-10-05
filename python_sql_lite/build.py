@@ -142,7 +142,6 @@ def insert_to_hold(conn):
 
 
 def insert_to_patrons(conn):
-
     sql = """
         insert into patron (id, first_name, last_name, email, gender, address) values
         (1, 'Mischa', 'Trice', 'mtrice0@sun.com', 'Male', '42 Stone Corner Circle'),
@@ -187,6 +186,8 @@ def main():
 
     # create a database connection
     conn = create_connection(database)
+    create_table(conn, sql_create_patron_table)
+    insert_to_patrons(conn)
     create_table(conn, sql_create_author_table)
     insert_to_author(conn)
     create_table(conn, sql_create_book_table)
@@ -195,8 +196,6 @@ def main():
     insert_to_checkout(conn)
     create_table(conn, sql_create_hold_table)
     insert_to_hold(conn)
-    create_table(conn, sql_create_patron_table)
-    insert_to_patrons(conn)
 
     print("Database build successful!")
 
