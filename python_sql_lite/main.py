@@ -1,4 +1,6 @@
 import argparse
+import os
+
 import openai
 import json
 
@@ -9,11 +11,9 @@ from db import create_connection
 DATABASE = "./pythonsqlite.db"
 
 def main(conn, question):
-    with open("auth.json", "r") as f:
-        auth = json.load(f)
     # Load your API key from an environment variable or secret management service
-    #openai.api_key = os.getenv(auth['api_key'])
-    openai.api_key = auth['api_key']
+    openai.api_key = os.environ.get('api_key')
+    print(os.environ.get('api_key'))
     print(f"Question: {question}")
 
     prompt = f"""
@@ -30,12 +30,14 @@ def main(conn, question):
         max_tokens=200
     )
 
-
     q = response["choices"][0]["text"]
+
+    start_pos = q.find("SELECT")
+    core_q = q[start_pos:]
 
     print(f"AI-generated SQL query: \n{q}")
     print("Answer: \n")
-    select_from_table(conn, q)
+    select_from_table(conn, core_q)
 
 
 if __name__ == "__main__":
